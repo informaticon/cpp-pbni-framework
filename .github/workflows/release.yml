@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: [self-hosted, windows]
     env:
-      BUILD_FLAGS: -pr pbni_x86 -o pb_version=22.0
+      BUILD_FLAGS: -pr pbni -s arch=x86 -o pb_version=22.0
     
     steps:
     - uses: actions/checkout@v3
