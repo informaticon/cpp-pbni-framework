@@ -1,0 +1,50 @@
+# Automatically
+# * builds the dll an uploads it to the gh release
+name: Autorelease (Build/Tag/Release)
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: [self-hosted, windows]
+    
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        submodules: recursive
+        token: ${{ secrets.GH_PRIVATE_READ_PAT }}
+
+    # Needed to give conan access to the private config repository
+    # The backtick ensures, that the secret isn't written into the config file 
+    - name: Git Creds
+      run: git config --global url.https://`${{ secrets.GH_PRIVATE_READ_PAT }}@github.com/.insteadOf https://github.com/
+
+    - name: "⚙️️ [Conan] Configure"
+      run: conan config install https://github.com/informaticon/dev.github.base.pbni-build-action.git -sf conan2
+
+    - name: "👤️ [Conan] Login"
+      run: conan remote login inf-conan
+      env:
+        CONAN_LOGIN_USERNAME_INF_CONAN: ${{ vars.CONAN_USERNAME }}
+        CONAN_PASSWORD_INF_CONAN: ${{ secrets.CONAN_PASSWORD }}
+
+    - name: "🔍️️ [Conan] Detect host Profile"
+      shell: cmd
+      run: conan profile detect -e
+      
+    - name: "📥️ [Conan] Install dependencies"
+      run: conan install . -pr pbni_x86 -b missing -o pb_version=22.0
+
+    - name: "📦 [Conan] Create"
+      run: conan create . -pr pbni_x86 -o pb_version=22.0
+
+    - name: "🌎️ [Conan] Upload built Packages"
+      shell: cmd
+      run: conan upload -c -r inf-conan *
+
+    - name: "👤 [Conan] Logout"
+      if: always()
+      run: conan remote logout inf-conan
