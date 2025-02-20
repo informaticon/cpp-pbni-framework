@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: [self-hosted, windows]
+    env:
+      BUILD_FLAGS: -pr pbni_x86 -o pb_version=22.0
     
     steps:
     - uses: actions/checkout@v3
@@ -35,18 +37,19 @@ jobs:
       run: conan profile detect -e
       
     - name: "📥️ [Conan] Install dependencies"
-      run: conan install . -pr pbni_x86 -b missing -o pb_version=22.0
+      run: conan install . -b missing ${{ env.BUILD_FLAGS }}
 
     - name: "📦 [Conan] Create"
-      run: conan create . -pr pbni_x86 -o pb_version=22.0 --format=json > "${{ runner.temp }}/graph.json"
+      shell: cmd
+      run: conan create . ${{ env.BUILD_FLAGS }} --format=json > "${{ runner.temp }}/graph.json"
 
     - name: "🌎️ [Conan] Upload built Packages"
+      shell: cmd
       run: |
         conan list --graph="${{ runner.temp }}/graph.json" --format=json > "${{ runner.temp }}/pkglist.json"
         conan upload -c -r inf-conan --list="${{ runner.temp }}/pkglist.json"
       env:
         CONAN_PASSWORD_INF_CONAN: ${{ secrets.CONAN_PASSWORD }}
-
 
     - name: "👤 [Conan] Logout"
       if: always()
