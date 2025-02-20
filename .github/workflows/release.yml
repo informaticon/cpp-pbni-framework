@@ -23,7 +23,7 @@ jobs:
       run: git config --global url.https://`${{ secrets.GH_PRIVATE_READ_PAT }}@github.com/.insteadOf https://github.com/
 
     - name: "⚙️️ [Conan] Configure"
-      run: conan config install https://github.com/informaticon/dev.github.base.pbni-build-action.git -sf conan2
+      run: conan config install https://github.com/informaticon/dev.github.base.pbni-build-action.git -sf conan
 
     - name: "👤️ [Conan] Login"
       run: conan remote login inf-conan
@@ -32,7 +32,6 @@ jobs:
         CONAN_PASSWORD_INF_CONAN: ${{ secrets.CONAN_PASSWORD }}
 
     - name: "🔍️️ [Conan] Detect host Profile"
-      shell: cmd
       run: conan profile detect -e
       
     - name: "📥️ [Conan] Install dependencies"
@@ -42,8 +41,10 @@ jobs:
       run: conan create . -pr pbni_x86 -o pb_version=22.0
 
     - name: "🌎️ [Conan] Upload built Packages"
-      shell: cmd
       run: conan upload -c -r inf-conan *
+      env:
+        CONAN_PASSWORD_INF_CONAN: ${{ secrets.CONAN_PASSWORD }}
+
 
     - name: "👤 [Conan] Logout"
       if: always()

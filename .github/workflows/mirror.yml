@@ -1,6 +1,6 @@
 name: Mirror commits to cpp-pbni-framework
-on:
-  - push
+on: []
+  # - push
 
 jobs:
   build:
@@ -13,6 +13,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set Remote
+        continue-on-error: true # sometimes the remote is already there, in which case this errors
         run: git remote add mirror git@github.com:informaticon/cpp-pbni-framework.git
       
       - name: Setup SSH Key
@@ -21,4 +22,4 @@ jobs:
           ssh-private-key: ${{ secrets.CPP_PBNI_FRAMEWORK_PRIVATE_KEY }}
     
       - name: Push
-        run: git push mirror main
+        run: git push mirror main && git push mirror main --tags
