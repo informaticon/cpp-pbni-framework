@@ -1,6 +1,6 @@
 name: Mirror commits to cpp-pbni-framework
-on: []
-  # - push
+on:
+  - push
 
 jobs:
   build:
