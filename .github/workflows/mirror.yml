@@ -1,0 +1,24 @@
+name: Mirror commits to cpp-pbni-framework
+on:
+  - push
+
+jobs:
+  build:
+    runs-on: [self-hosted, windows]
+
+    steps:
+      - name: Pull
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set Remote
+        run: git remote add mirror git@github.com:informaticon/cpp-pbni-framework.git
+      
+      - name: Setup SSH Key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.CPP_PBNI_FRAMEWORK_PRIVATE_KEY }}
+    
+      - name: Push
+        run: git push mirror main
