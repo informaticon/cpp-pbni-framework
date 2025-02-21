@@ -10,6 +10,7 @@ jobs:
   build:
     runs-on: [self-hosted, windows]
     env:
+      # TODO matrix
       BUILD_FLAGS: -pr pbni -s arch=x86 -o pb_version=22.0
     
     steps:
@@ -24,6 +25,9 @@ jobs:
     - name: Git Creds
       run: git config --global url.https://`${{ secrets.GH_PRIVATE_READ_PAT }}@github.com/.insteadOf https://github.com/
 
+    - name: "🔍️️ [Conan] Detect host Profile"
+      run: conan profile detect -e
+
     - name: "⚙️️ [Conan] Configure"
       run: conan config install https://github.com/informaticon/dev.github.base.pbni-build-action.git -sf conan -a "-b v2"
 
@@ -32,9 +36,6 @@ jobs:
       env:
         CONAN_LOGIN_USERNAME_INF_CONAN: ${{ vars.CONAN_USERNAME }}
         CONAN_PASSWORD_INF_CONAN: ${{ secrets.CONAN_PASSWORD }}
-
-    - name: "🔍️️ [Conan] Detect host Profile"
-      run: conan profile detect -e
       
     - name: "📥️ [Conan] Install dependencies"
       run: conan install . -b missing ${{ env.BUILD_FLAGS }}

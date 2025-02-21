@@ -1,6 +1,8 @@
 # Informaticon PBNI Framework
 Libraries for creating PowerBuilder Extensions using PowerBuilder Native Interface (PBNI).
 
+[![Tests](https://github.com/informaticon/lib.cpp.base.pbni-framework/actions/workflows/tests.yml/badge.svg)](https://github.com/informaticon/lib.cpp.base.pbni-framework/actions/workflows/tests.yml)
+
 ## Runtime dependencies
  - [Informaticon Exception Framework](https://github.com/informaticon/lib.pb.base.exception-framework)
  - Microsoft Visual C++
@@ -56,8 +58,7 @@ This is a cpp library, you only have to build it for testing purposes, otherwise
 ### Tests
 Build the test dll by running
 ```ps1
-cmake -S .\test\cpp\ -B .\test\cpp\build --preset vcpkg
-cmake --build .\test\cpp\build --target install
+conan build .\test\cpp\ -pr pbni_x86 -b missing -o *:pb_version=22.0
 ```
 
 Run tests by doing

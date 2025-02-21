@@ -1,0 +1,35 @@
+name: Run tests
+on:
+  - push
+
+jobs:
+  build:
+    runs-on: [self-hosted, windows]
+    
+    # TODO matrix with architecture and pb_version
+    env:
+      BUILD_FLAGS: -pr pbni -s arch=x86 -o pb_version=22.0
+    
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        submodules: recursive
+        token: ${{ secrets.GH_PRIVATE_READ_PAT }}
+
+    # Needed to give conan access to the private config repository
+    # The backtick ensures, that the secret isn't written into the config file 
+    - name: Git Creds
+      run: git config --global url.https://`${{ secrets.GH_PRIVATE_READ_PAT }}@github.com/.insteadOf https://github.com/
+
+    - name: "🔍️️ [Conan] Detect host Profile"
+      run: conan profile detect -e
+
+    - name: "⚙️️ [Conan] Configure"
+      run: conan config install https://github.com/informaticon/dev.github.base.pbni-build-action.git -sf conan -a "-b v2"
+
+    - name: "🛠️️️ [Test] Build"
+      run: conan build test/cpp ${{ env.BUILD_FLAGS }}
+
+    - name: "📝️ [Test] Run"
+      run: make -C test/pb tests
