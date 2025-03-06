@@ -11,7 +11,7 @@ jobs:
     runs-on: [self-hosted, windows]
     strategy:
       matrix:
-        arch: [x86, x64]
+        arch: [x86, x86_64]
         build_type: [Debug, MinSizeRel]
 
     env:
