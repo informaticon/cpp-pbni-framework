@@ -14,7 +14,6 @@ class PBNIFrameworkRecipe(ConanFile):
     author = "micha.wehrli@informaticon.com"
     url = "https://github.com/informaticon/lib.cpp.base.pbni-framework"
     description = "Framework for creating PowerBuilder Extensions using PBNI"
-    requires = ["boost/1.85.0"]
 
     settings = "os", "compiler", "build_type", "arch"
     exports_sources = "CMakeLists.txt", "src/**"
@@ -22,6 +21,9 @@ class PBNIFrameworkRecipe(ConanFile):
     options = { "pb_version": ["ANY"] }
 
     generators = "CMakeDeps", "CMakeToolchain"
+
+    def requirements(self):
+        self.requires("boost/1.85.0", transitive_headers=True)
 
     def validate(self):
         if self.settings.compiler.cppstd:

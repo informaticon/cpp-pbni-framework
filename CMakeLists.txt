@@ -85,19 +85,6 @@ target_compile_features(lib.cpp.base.pbni-framework PUBLIC cxx_std_20)
 if(MSVC)
     # To be able to use __VA_OPT__
     target_compile_options(lib.cpp.base.pbni-framework PUBLIC /Zc:preprocessor)
-
-    if(PBNI_USE_STATIC_RUNTIME)
-        cmake_policy(GET CMP0091 CMP0091_Value)
-
-        if(NOT ${CMP0091_Value} STREQUAL "NEW")
-            message(FATAL_ERROR "To be able to Statically link the Runtime, you need to set the CMP0091 option to NEW!")
-        endif()
-
-        set_target_properties(lib.cpp.base.pbni-framework
-        PROPERTIES
-            MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
-        )
-    endif()
 endif()
 
 target_compile_definitions(lib.cpp.base.pbni-framework
