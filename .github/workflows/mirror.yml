@@ -14,14 +14,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set Remote
-        continue-on-error: true # sometimes the remote is already there, in which case this errors
-        run: git remote add mirror git@github.com:informaticon/cpp-pbni-framework.git
-
       - name: Setup SSH Key
         uses: webfactory/ssh-agent@dc588b651fe13675774614f8e6a936a468676387 # v0.9.0
         with:
           ssh-private-key: ${{ secrets.CPP_PBNI_FRAMEWORK_PRIVATE_KEY }}
+
+      - name: Set Remote
+        continue-on-error: true # sometimes the remote is already there, in which case this errors
+        run: git remote add mirror git@github.com:informaticon/cpp-pbni-framework.git
 
       - name: Push
         run: |
