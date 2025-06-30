@@ -85,6 +85,15 @@ target_compile_features(lib.cpp.base.pbni-framework PUBLIC cxx_std_20)
 if(MSVC)
     # To be able to use __VA_OPT__
     target_compile_options(lib.cpp.base.pbni-framework PUBLIC /Zc:preprocessor)
+    target_compile_definitions(lib.cpp.base.pbni-framework
+    PUBLIC
+        MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
+    )
+
+    set_target_properties(lib.cpp.base.pbni-framework
+    PROPERTIES
+        MSVC_DEBUG_INFORMATION_FORMAT "$<$<CONFIG:Debug,RelWithDebInfo>:Embedded>"
+    )
 endif()
 
 target_compile_definitions(lib.cpp.base.pbni-framework

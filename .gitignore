@@ -8,3 +8,5 @@ out
 test/cpp/build
 test/pb/build
 test/pb/lib.pbni.base.framework-tester.dll
+
+CMakeUserPresets.json
