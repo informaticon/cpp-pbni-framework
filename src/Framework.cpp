@@ -5,7 +5,7 @@
 #include "ClassDescription.h"
 
 
-Inf::PBObject<L"u_exf_ex_pbni"> Inf::ConvertException(IPB_Session* session, const std::exception& ex)
+Inf::PBObject<L"u_exf_ex"> Inf::ConvertException(IPB_Session* session, const std::exception& ex)
 {
     PBObject<L"u_exf_ex_pbni"> pbException(session);
 
