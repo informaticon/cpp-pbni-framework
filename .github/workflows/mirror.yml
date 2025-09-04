@@ -17,7 +17,7 @@ jobs:
       - name: Setup SSH Key
         uses: webfactory/ssh-agent@836c84ec59a0e7bc0eabc79988384eb567561ee2 # v0.7.0
         with:
-          ssh-private-key: ${{ secrets.CPP_PBNI_FRAMEWORK_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.PUBLIC_MIRROR_PRIVATE_SSH_KEY }}
 
       - name: Set Remote
         continue-on-error: true # sometimes the remote is already there, in which case this errors
