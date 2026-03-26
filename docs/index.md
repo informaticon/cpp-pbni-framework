@@ -10,7 +10,7 @@ Under the hood, the Framework gathers the Argument and Return Types of the Metho
 
 ### Dependencies
  - PowerBuilder PBNI
- - Boost (vcpkg)
+ - Boost
 
 ### Documentation
   - [Quickstart](quick-start.md)

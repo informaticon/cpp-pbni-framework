@@ -1,8 +1,8 @@
 # External Libraries
 ---
 
-## vcpkg Manifest
-We use vcpkg as a package manager, so you can just add the dependency in `vcpkg.json`:
+## Conan
+We use conan as a package manager, so you can just add the dependency in `conanfile.py`:
 ```json
 {
 	...
