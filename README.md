@@ -8,17 +8,18 @@ Libraries for creating PowerBuilder Extensions using PowerBuilder Native Interfa
  - Microsoft Visual C++
 
 ## Usage
-If you are creating a new project, you can use this [template repository](https://github.com/informaticon/div.cpp.base.pbni-extension-template).
-You can find some (partially outdated) examples over [there](https://github.com/informaticon/div.cpp.base.pbni-framework-usage-example).
+If you are creating a new project, you can use this [template repository](https://github.com/informaticon/cpp-pbni-extension-template).
+You can find some documented usage examples over [there](https://github.com/informaticon/cpp-pbni-framework-usage-example).
 
 To check how to create classes and export functions, you can also check out one of these repositories (only available to Informaticon employees):
+ - [lib.pb.base.string-utils](https://github.com/informaticon/lib.pbni.base.string-utils)
+ - [lib.pb.base.network-utils](https://github.com/informaticon/lib.pb.base.network-utils)
+ - [lib.pb.base.filesystem-utils](https://github.com/informaticon/lib.pb.base.filesystem-utils)
+ - [lib.pb.base.os-utils](https://github.com/informaticon/lib.pb.base.os-utils)
+ - [lib.pb.base.graphic-utils](https://github.com/informaticon/lib.pb.base.graphic-utils)
+ - [lib.pb.base.serializer](https://github.com/informaticon/lib.pb.base.serializer)
+ - [lib.pb.base.payment-terminal-interface](https://github.com/informaticon/lib.pb.base.payment-terminal-interface)
  - [lib.pbni.base.tse](https://github.com/informaticon/lib.pbni.base.tse)
- - [lib.pbni.base.string-utils](https://github.com/informaticon/lib.pbni.base.string-utils)
- - [lib.pbni.base.pepper](https://github.com/informaticon/lib.pbni.base.pepper)
- - [lib.pbni.base.mail-client](https://github.com/informaticon/lib.pbni.base.mail-client)
- - [lib.pbni.base.libcurl](https://github.com/informaticon/lib.pbni.base.libcurl)
- - [lib.pbni.base.serializer](https://github.com/informaticon/lib.pbni.base.serializer)
- - [lib.pbni.base.graphics-utils](https://github.com/informaticon/lib.pbni.base.graphics-utils)
 
 ## x64
 Now works for x64 Builds. Things to consider:
@@ -50,15 +51,12 @@ This is a cpp library, you only have to build it for testing purposes, otherwise
 - PowerBuilder PBNI Library
 - CMake ([direct download](https://cmake.org/download/) or via [choco](https://community.chocolatey.org/packages/cmake))
 - * Microsoft Visual C++ Build Tools (e.g. from [MS Visual Studio 2022 Community Edition](https://visualstudio.microsoft.com/de/vs/community/))
-- vcpkg (to get these libraries):
-  - boost-stacktrace
-  - boost-utility
-  - boost-multiprecision
+- Conan 2.0
 
 ### Tests
 Build the test dll by running
 ```ps1
-conan build .\test\cpp\ -pr pbni_x86 -b missing -o *:pb_version=22.0
+conan build .\test\cpp\ -pr pbni_x86 -b missing -o *:pb_version=25.0
 ```
 
 Run tests by doing

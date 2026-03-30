@@ -1,9 +1,11 @@
 # PowerBuilder DataTypes
 ---
 
-
 ## Types
 All types used by PowerBuilder Framework start with `Inf::PB`, when you declare Methods, you should only use those. You can use References in your Methods Arguments, these will be saved to PowerBuilder once the Method ends. You cannot use References as Return Value, or Pointers anywhere.
+
+See [this example usage](https://github.com/informaticon/cpp-pbni-framework-usage-example/blob/main/src/example.cpp).
+
 
 #### Primitives
 Primitive Types are copied to C++. They can be used in operations and are implicitly Cast into their C++ counterparts.  
@@ -28,6 +30,8 @@ if ((pbint) i > 10) {
     ...
 }
 ```
+
+`longptr` isn't natively supported by PBNI. But the PBNI Framework offers a `FakePBLongPtr`, which is just a `PBLong` in Win32 Builds and `PBLonglong` in x64 Builds.
 
 #### Complex
 Everything, that isn't a Number, Boolean, Char or Byte, is a complex Type (Only exception: Decimal is a number, but complex). The Values of the complex types are owned by PowerBuilder and the provided `Inf::PB<Type>`s are just Wrappers to the PowerBuilder Objects. These types can also be Null, so make sure to check.
